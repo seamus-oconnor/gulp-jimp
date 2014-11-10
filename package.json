@@ -1,0 +1,31 @@
+{
+  "name": "gulp-jimp",
+  "version": "0.0.1",
+  "description": "A Gulp friendly version of Jimp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antoinejaussoin/gulp-jimp.git"
+  },
+  "keywords": [
+    "gulp",
+    "jimp",
+    "image",
+    "manipulation",
+    "crop",
+    "resize"
+  ],
+  "author": "Antoine Jaussoin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antoinejaussoin/gulp-jimp/issues"
+  },
+  "homepage": "https://github.com/antoinejaussoin/gulp-jimp",
+  "dependencies": {
+    "event-stream": "^3.1.7",
+    "jimp": "^0.1.1"
+  }
+}
