@@ -1,9 +1,13 @@
 gulp-jimp
 =========
 
-> JavaScript Image Manipulation Program adapted to Gulp
+[![Build Status](https://travis-ci.org/antoinejaussoin/gulp-jimp.svg)](https://travis-ci.org/antoinejaussoin/gulp-jimp)
 
-Disclaimer: this is a work in progress, only works with JPG for now 
+
+> JavaScript Image Manipulation Program (JIMP) adapted to Gulp
+
+
+Manipulate your images directly from Gulp, without the need for any external dependency (i.e. external executables). OS independent.
 
 ## Install
 
@@ -84,3 +88,11 @@ You can define the transformations in the options, and add as many as you want (
 ```js
 { gaussian: 90 }
 ```
+
+### Big Thanks
+
+Thanks to Oliver Moran and his wonderful [Jimp module](https://www.npmjs.org/package/jimp)
+
+### Roadmap
+
+I'm planning to take a look at the original Jimp module, to see if I can make that use streams/buffers to avoid having to write a temporary file.

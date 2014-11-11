@@ -1,16 +1,18 @@
 var es = require('event-stream');
 var Jimp = require('jimp');
 var fs = require('fs');
+var path = require('path');
 
 module.exports = function (opts) {
 
     function modifyFile(file, cb) {
 
+        //debugger;
         if (file.isNull()) return cb(null, file); // pass along
         if (file.isStream()) return cb(new Error('gulp-jimp: Streaming not supported'));
 
         var image = new Jimp(file.path, function () {
-
+debugger;
             if (opts.resize)
                 this.resize(opts.resize.width, opts.resize.height);
 
@@ -42,7 +44,8 @@ module.exports = function (opts) {
                 this.crop(opts.crop.x, opts.crop.y, opts.crop.width, opts.crop.height);
 
 
-            var tempFile = file.path + '.tmp.jpg';
+            var tempFile = file.path + '.tmp' + path.extname(file.path);
+            console.log('temp file: ' + tempFile);
             this.write(tempFile, function () {
 
                 setTimeout(function () {
