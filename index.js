@@ -12,7 +12,7 @@ module.exports = function (opts) {
         if (file.isStream()) return cb(new Error('gulp-jimp: Streaming not supported'));
 
         var image = new Jimp(file.path, function () {
-debugger;
+
             if (opts.resize)
                 this.resize(opts.resize.width, opts.resize.height);
 
