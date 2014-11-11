@@ -2,7 +2,8 @@ var should = require('should');
 var File = require('vinyl');
 var es = require('event-stream');
 var rewire = require('rewire');
-var systemUnderTest = rewire('./../index');
+var sinon = require('sinon');
+var systemUnderTest = rewire('./../index'); 
 
 describe('gulp-jimp', function () {
 
@@ -12,7 +13,7 @@ describe('gulp-jimp', function () {
         fn.bind(this)();
 
     };
-    mockJimp.prototype.resize = function (w, h) {}
+    mockJimp.prototype.resize = sinon.spy();
     mockJimp.prototype.write = function (file, fn) {
         fn.bind(this)();
     }
@@ -28,15 +29,15 @@ describe('gulp-jimp', function () {
 
     systemUnderTest.__set__('Jimp', mockJimp);
     systemUnderTest.__set__('fs', mockFs);
-
-
+    
     describe('Testing a JPG file', function () {
+        
+        var jimpObject;
 
         beforeEach(function (done) {
             fakeFile = new File({
                 contents: new Buffer('originalContent')
             });
-
 
             var output = systemUnderTest({
                 resize: {
@@ -51,6 +52,7 @@ describe('gulp-jimp', function () {
                 result = file.contents.toString();
                 done();
             });
+        
         });
 
         it('should have replaced the file content by the content of the one modified by Jimp', function () {
