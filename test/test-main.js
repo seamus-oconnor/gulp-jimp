@@ -19,7 +19,7 @@ describe('gulp-jimp', function () {
     }
 
     var mockFs = {
-        readFileSync: function (file, opts, cb) {
+        readFile: function (file, opts, cb) {
             cb(null, 'changedContent');
         },
         unlink: function (file, cb) {

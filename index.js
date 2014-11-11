@@ -7,11 +7,13 @@ module.exports = function (opts) {
 
     function modifyFile(file, cb) {
 
-        //debugger;
         if (file.isNull()) return cb(null, file); // pass along
         if (file.isStream()) return cb(new Error('gulp-jimp: Streaming not supported'));
-
-        var image = new Jimp(file.path, function () {
+        
+        var image = new Jimp(file.path, function (err) {
+            
+            if (err)
+                return cb(err);
 
             if (opts.resize)
                 this.resize(opts.resize.width, opts.resize.height);
@@ -43,27 +45,32 @@ module.exports = function (opts) {
             if (opts.crop)
                 this.crop(opts.crop.x, opts.crop.y, opts.crop.width, opts.crop.height);
 
-
             var tempFile = file.path + '.tmp' + path.extname(file.path);
             
-            this.write(tempFile, function () {
+            this.write(tempFile, function (err) {
+                                
+                if (err)
+                    return cb(err);
 
                 setTimeout(function () {
-                    fs.readFileSync(tempFile, null, function (err, data) {
+                    
+                    fs.readFile(tempFile, null, function (err, data) {
+                    
                         if (err)
                             return cb(new Error(err));
 
                         file.contents = new Buffer(data);
-
-                        fs.unlink(tempFile, function (err2) {
-                            if (err2)
-                                return cb(new Error(err2));
-
+                        
+                        fs.unlink(tempFile, function (err) {
+                            
+                            if (err)
+                                return cb(new Error(err));
+                            
                             cb(null, file);
                         });
 
                     });
-                }, 0); // Concurrency issue
+                }, 00); // Concurrency issue
 
             });
         });
