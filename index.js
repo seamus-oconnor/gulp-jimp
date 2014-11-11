@@ -45,7 +45,7 @@ module.exports = function (opts) {
 
 
             var tempFile = file.path + '.tmp' + path.extname(file.path);
-            console.log('temp file: ' + tempFile);
+            
             this.write(tempFile, function () {
 
                 setTimeout(function () {
