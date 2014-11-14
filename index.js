@@ -30,7 +30,7 @@ module.exports = function (opts) {
             if (opts.sepia)
                 this.sepia();
 
-            if (opts.opacity)
+            if (opts.opacity !== undefined)
                 this.opacity(opts.opacity);
 
             if (opts.scale)

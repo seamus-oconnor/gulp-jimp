@@ -34,59 +34,59 @@ Support all Jimp functionalities as of version 0.1.1.
 
 You can define the transformations in the options, and add as many as you want (see example above).
 
+## Resize
+
+```js
+{ resize: { width: 100, height: 100 } } // Very quick, unlike "crop"
+```
+
 ## Crop
 
 ```js
-{ crop: { x: 100, y: 100, width: 200, height: 200 } }
+{ crop: { x: 100, y: 100, width: 200, height: 200 } } // Very slow for some reason
 ```
 
 ## Invert
 
 ```js
-{ invert: true }
+{ invert: true } // Inverts the colours (very fast)
 ```
 
 ## Greyscale
 
 ```js
-{ greyscale: true }
+{ greyscale: true } // Turns into gray scale (very fast)
 ```
 
 ## Sepia
 
 ```js
-{ sepia: true }
+{ sepia: true } // Turns into sepia (very fast)
 ```
 
 ## Opacity
 
 ```js
-{ opacity: 90 }
-```
-
-## Resize
-
-```js
-{ resize: { width: 100, height: 100 } }
+{ opacity: 0.5 } // Between 0 and 1, but doesn't seem to work
 ```
 
 ## Scale
 
 ```js
-{ scale: 90 }
+{ scale: 1.2 } // Will increase the image size by 20%
 ```
 
 
 ## Blur
 
 ```js
-{ blur: 90 }
+{ blur: 10 } // Value between 1 (slighly blured) and 100 (completely blured)
 ```
 
 ## Gaussian
 
 ```js
-{ gaussian: 90 }
+{ gaussian: 90 } // Min value: 1 (very very slow, even at 1, even slower when you go higher)
 ```
 
 ### Big Thanks
