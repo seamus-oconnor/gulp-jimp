@@ -3,6 +3,7 @@ gulp-jimp
 
 [![Build Status](https://travis-ci.org/antoinejaussoin/gulp-jimp.svg)](https://travis-ci.org/antoinejaussoin/gulp-jimp)
 
+![](https://nodei.co/npm/gulp-jimp.png?downloads=True&stars=True)
 
 > JavaScript Image Manipulation Program (JIMP) adapted to Gulp
 
