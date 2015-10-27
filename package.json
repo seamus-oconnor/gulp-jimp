@@ -1,6 +1,6 @@
 {
     "name": "gulp-jimp",
-    "version": "0.0.8",
+    "version": "0.1.0",
     "description": "A Gulp friendly version of Jimp",
     "main": "index.js",
     "scripts": {
@@ -26,15 +26,15 @@
     },
     "homepage": "https://github.com/antoinejaussoin/gulp-jimp",
     "dependencies": {
-        "event-stream": "^3.1.7",
+        "event-stream": "^3.3.2",
         "jimp": "^0.2.9"
     },
     "devDependencies": {
-        "mocha": "^2.0.1",
-        "rewire": "^2.1.3",
-        "should": "^4.3.0",
-        "sinon": "^1.11.1",
-        "vinyl": "^0.4.3"
+        "mocha": "^2.3.3",
+        "rewire": "^2.3.4",
+        "should": "^7.1.1",
+        "sinon": "^1.17.2",
+        "vinyl": "^1.1.0"
     },
     "engine": "node >= 0.10.0"
 }
