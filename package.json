@@ -27,7 +27,7 @@
     "homepage": "https://github.com/antoinejaussoin/gulp-jimp",
     "dependencies": {
         "event-stream": "^3.1.7",
-        "jimp": "^0.1.1"
+        "jimp": "^0.2.9"
     },
     "devDependencies": {
         "mocha": "^2.0.1",
