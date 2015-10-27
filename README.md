@@ -31,7 +31,7 @@ gulp.task('default', function () {
 
 #### Options
 
-Support all Jimp functionalities as of version 0.1.1.
+Support all Jimp functionalities as of version 0.2.9.
 
 You can define the transformations in the options, and add as many as you want (see example above).
 
