@@ -1,81 +1,95 @@
-var es = require('event-stream');
-var Jimp = require('jimp');
-var fs = require('fs');
-var path = require('path');
+(function () {
 
-module.exports = function (opts) {
+    'use strict';
 
-    function modifyFile(file, cb) {
+    var _ = require('underscore'),
+        async = require('async'),
+        through2 = require('through2'),
+        gutil = require('gulp-util'),
+        Jimp = require('jimp');
 
-        if (file.isNull()) return cb(null, file); // pass along
-        if (file.isStream()) return cb(new Error('gulp-jimp: Streaming not supported'));
-        
-        var image = new Jimp(file.path, function (err) {
-            
-            if (err)
-                return cb(err);
+    module.exports = function (parameters) {
 
-            if (opts.resize)
-                this.resize(opts.resize.width, opts.resize.height);
+        function print(message) {
+            console.log(message + '...');
+        }
 
-            if (opts.quality)
-                this.quality(opts.quality);
+        return through2.obj(function (file, encoding, callback) {
 
-            if (opts.greyscale)
-                this.greyscale();
+            var self = this;
 
-            if (opts.invert)
-                this.invert();
+            if (file.isNull()) {
+                return callback(null, file);
+            }
 
-            if (opts.sepia)
-                this.sepia();
+            if (file.isStream()) {
+                return callback(new gutil.PluginError('gulp-jimp2', 'Streaming not supported'));
+            }
 
-            if (opts.opacity !== undefined)
-                this.opacity(opts.opacity);
+            Jimp.read(file.contents).then(function (image) {
 
-            if (opts.scale)
-                this.scale(opts.scale);
+                if (parameters.resize) {
+                    print('Applying Resize of ' + parameters.resize.width + 'x' + parameters.resize.height);
+                    image.resize(parameters.resize.width, parameters.resize.height);
+                }
 
-            if (opts.blur)
-                this.blur(opts.blur);
+                if (parameters.quality) {
+                    print('Applying Quality of ' + parameters.quality);
+                    image.quality(parameters.quality);
+                }
 
-            if (opts.gaussian)
-                this.gaussian(opts.gaussian);
+                if (parameters.greyscale) {
+                    print('Applying Greyscale');
+                    image.greyscale();
+                }
 
-            if (opts.crop)
-                this.crop(opts.crop.x, opts.crop.y, opts.crop.width, opts.crop.height);
+                if (parameters.invert) {
+                    print('Applying Invert');
+                    image.invert();
+                }
 
-            var tempFile = file.path + '.tmp' + path.extname(file.path);
-            
-            this.write(tempFile, function (err) {
-                                
-                if (err)
-                    return cb(err);
+                if (parameters.sepia) {
+                    print('Applying Sepia');
+                    image.sepia();
+                }
 
-                setTimeout(function () {
-                    
-                    fs.readFile(tempFile, null, function (err, data) {
-                    
-                        if (err)
-                            return cb(new Error(err));
+                if (parameters.opacity !== undefined) {
+                    print('Applying Opacity of ' + parameters.opacity);
+                    image.opacity(parameters.opacity);
+                }
 
-                        file.contents = new Buffer(data);
-                        
-                        fs.unlink(tempFile, function (err) {
-                            
-                            if (err)
-                                return cb(new Error(err));
-                            
-                            cb(null, file);
-                        });
+                if (parameters.scale) {
+                    print('Applying Scale of ' + parameters.scale);
+                    image.scale(parameters.scale);
+                }
 
-                    });
-                }, 00); // Concurrency issue
+                if (parameters.blur) {
+                    print('Applying Blur of ' + parameters.blur);
+                    image.blur(parameters.blur);
+                }
 
+                if (parameters.gaussian) {
+                    print('Applying Gaussian of ' + parameters.gaussian);
+                    image.gaussian(parameters.gaussian);
+                }
+
+                if (parameters.crop) {
+                    //print('Applying Crop of ' + parameters.crop.width + 'x' + parameters.crop.height + ' at ' + parameters.crop.x + ':' + parameters.crop.y);
+                    //pxData.copy(rawData, rawPos, pxPos, pxPos + byteWidth);: RangeError: out of range index
+                    //image.crop(parameters.crop.x, parameters.crop.y, parameters.crop.width, parameters.crop.height);
+                }
+
+                image.getBuffer(Jimp.MIME_PNG, function (error, buffer) {
+                    self.push(new gutil.File({ path: parameters.name, contents: buffer }));
+                    return callback(error);
+                });
+
+            }).catch(function (error) {
+                return callback(error);
             });
+
         });
 
-    }
+    };
 
-    return es.map(modifyFile);
-};
+})();
