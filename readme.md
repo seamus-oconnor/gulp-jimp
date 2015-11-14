@@ -1,4 +1,4 @@
-# gulp-jimp2 [![Build Status](https://travis-ci.org/haydenbleasel/gulp-jimp.svg?branch=master)](https://travis-ci.org/haydenbleasel/gulp-jimp)
+# gulp-jimp2 [![Build Status](https://travis-ci.org/haydenbleasel/gulp-jimp2.svg?branch=master)](https://travis-ci.org/haydenbleasel/gulp-jimp2)
 
 A JIMP wrapper for Gulp forked from [antoinejaussoin/gulp-jimp](https://github.com/antoinejaussoin/gulp-jimp). Forked to provide a configuration for the full set of JIMP features, handle multiple image outputs, work purely with image buffers and deal with the Gulp stream properly. Install with:
 
