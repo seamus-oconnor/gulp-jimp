@@ -8,6 +8,7 @@
         gutil = require('gulp-util'),
         colors = require('colors'),
         color = require('tinycolor2'),
+        path = require('path'),
         Jimp = require('jimp');
 
     module.exports = function (outputs, logging) {
@@ -32,10 +33,15 @@
 
             Jimp.read(file.contents).then(function (image) {
 
-                async.forEachOf(outputs, function (options, name, callback) {
+                var oldName = path.basename(file.path),
+                    extension = path.extname(oldName),
+                    filename = path.basename(oldName, extension);
+
+                async.forEachOf(outputs, function (options, suffix, callback) {
 
                     var rgba = options.background ? color(options.background).toRgb() : { r: 0, g: 0, b: 0, a: 0 },
-                        background = Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * 255);
+                        background = Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * 255),
+                        newName = filename + suffix + extension;
 
                     if (options.crop) {
                         //print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y);
@@ -44,122 +50,122 @@
                     }
 
                     if (options.invert) {
-                        print('Inverting image', name);
+                        print('Inverting image', newName);
                         image.invert();
                     }
 
                     if (options.flip || options.mirror) {
-                        print('Flipping (mirroring) image ' + (options.flip.horizontal ? '' : 'not ') + 'horizontally and ' + (options.flip.vertical ? '' : 'not ') + 'vertically', name);
+                        print('Flipping (mirroring) image ' + (options.flip.horizontal ? '' : 'not ') + 'horizontally and ' + (options.flip.vertical ? '' : 'not ') + 'vertically', newName);
                         image.flip(options.flip.horizontal, options.flip.vertical);
                     }
 
                     if (options.gaussian) {
-                        print('Applying gaussian blur of ' + options.gaussian, name);
+                        print('Applying gaussian blur of ' + options.gaussian, newName);
                         image.gaussian(options.gaussian);
                     }
 
                     if (options.blur) {
-                        print('Applying fast blur of ' + options.blur, name);
+                        print('Applying fast blur of ' + options.blur, newName);
                         image.blur(options.blur);
                     }
 
                     if (options.greyscale) {
-                        print('Applying greyscale', name);
+                        print('Applying greyscale', newName);
                         image.greyscale();
                     }
 
                     if (options.sepia) {
-                        print('Applying sepia tone', name);
+                        print('Applying sepia tone', newName);
                         image.sepia();
                     }
 
                     if (options.opacity !== undefined) {
-                        print('Changing opacity to ' + options.opacity, name);
+                        print('Changing opacity to ' + options.opacity, newName);
                         image.opacity(options.opacity);
                     }
 
                     if (options.resize) {
-                        print('Resizing image to ' + (options.resize.width || 'AUTO') + 'x' + (options.resize.height || 'AUTO'), name);
+                        print('Resizing image to ' + (options.resize.width || 'AUTO') + 'x' + (options.resize.height || 'AUTO'), newName);
                         image.resize(options.resize.width || Jimp.AUTO, options.resize.height || Jimp.AUTO);
                     }
 
                     if (options.scale) {
-                        print('Scaling image by ' + options.scale, name);
+                        print('Scaling image by ' + options.scale, newName);
                         image.scale(options.scale);
                     }
 
                     if (options.rotate) {
-                        print('Rotating image ' + options.rotate + ' degrees clockwise', name);
+                        print('Rotating image ' + options.rotate + ' degrees clockwise', newName);
                         image.rotate(options.rotate);
                     }
 
                     if (options.blit) {
-                        print('Blitting ' + options.blit.src + ' at ' + options.blit.x + ',' + options.blit.y, name);
+                        print('Blitting ' + options.blit.src + ' at ' + options.blit.x + ',' + options.blit.y, newName);
                         image.blit(options.blit.src, options.blit.x, options.blit.y);
                     }
 
                     if (options.composite) {
-                        print('Compositing ' + options.composite.src + ' at ' + options.composite.x + ',' + options.composite.y, name);
+                        print('Compositing ' + options.composite.src + ' at ' + options.composite.x + ',' + options.composite.y, newName);
                         image.composite(options.composite.src, options.composite.x, options.composite.y);
                     }
 
                     if (options.brightness !== undefined) {
-                        print('Adjusting brightness by ' + options.brightness, name);
+                        print('Adjusting brightness by ' + options.brightness, newName);
                         image.brightness(options.brightness);
                     }
 
                     if (options.contrast !== undefined) {
-                        print('Adjusting contrast by ' + options.contrast, name);
+                        print('Adjusting contrast by ' + options.contrast, newName);
                         image.contrast(options.contrast);
                     }
 
                     if (options.posterize !== undefined) {
-                        print('Posterizing image with ' + options.posterize + ' level', name);
+                        print('Posterizing image with ' + options.posterize + ' level', newName);
                         image.posterize(options.posterize);
                     }
 
                     if (options.mask) {
-                        print('Masking ' + options.mask.src + ' at ' + options.mask.x + ',' + options.mask.y, name);
+                        print('Masking ' + options.mask.src + ' at ' + options.mask.x + ',' + options.mask.y, newName);
                         image.mask(options.mask.src, options.mask.x, options.mask.y);
                     }
 
                     if (options.dither565) {
-                        print('Dithering image, reducing colour space to 16 bits', name);
+                        print('Dithering image, reducing colour space to 16 bits', newName);
                         image.dither565();
                     }
 
                     if (options.cover) {
-                        print('Covering image within ' + options.cover.width + 'x' + options.cover.height, name);
+                        print('Covering image within ' + options.cover.width + 'x' + options.cover.height, newName);
                         image.cover(options.cover.width, options.cover.height);
                     }
 
                     if (options.contain) {
-                        print('Containing image within ' + options.contain.width + 'x' + options.contain.height, name);
+                        print('Containing image within ' + options.contain.width + 'x' + options.contain.height, newName);
                         image.contain(options.contain.width, options.contain.height);
                     }
 
                     if (options.background) {
-                        print('Setting background colour to ' + options.background, name);
+                        print('Setting background colour to ' + options.background, newName);
                         image.background(background);
                     }
 
                     if (options.fade !== undefined) {
-                        print('Fading image by ' + options.fade, name);
+                        print('Fading image by ' + options.fade, newName);
                         image.fade(options.fade);
                     }
 
                     if (options.opaque) {
-                        print('Setting the alpha channel on every pixel to fully opaque', name);
+                        print('Setting the alpha channel on every pixel to fully opaque', newName);
                         image.opaque();
                     }
 
                     if (options.quality !== undefined) {
-                        print('Setting quality level to ' + options.quality, name);
+                        print('Setting quality level to ' + options.quality, newName);
                         image.quality(options.quality);
                     }
 
                     image.getBuffer(Jimp.MIME_PNG, function (error, buffer) {
-                        self.push(new gutil.File({ path: name, contents: buffer }));
+                        self.push(new gutil.File({ path: newName, contents: buffer }));
                         return callback(error);
                     });
 
