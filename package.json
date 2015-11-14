@@ -25,10 +25,12 @@
   "homepage": "https://github.com/haydenbleasel/gulp-jimp2",
   "dependencies": {
     "async": "^1.5.0",
+    "colors": "^1.1.2",
     "event-stream": "^3.3.2",
     "gulp-util": "^3.0.7",
     "jimp": "^0.2.19",
     "through2": "^2.0.0",
+    "tinycolor2": "^1.1.2",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
