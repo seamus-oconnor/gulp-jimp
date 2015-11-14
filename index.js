@@ -79,8 +79,8 @@
                     }
 
                     if (options.resize) {
-                        print('Resizing image to ' + options.resize.width + 'x' + options.resize.height, name);
-                        image.resize(options.resize.width, options.resize.height);
+                        print('Resizing image to ' + (options.resize.width || 'AUTO') + 'x' + (options.resize.height || 'AUTO'), name);
+                        image.resize(options.resize.width || Jimp.AUTO, options.resize.height || Jimp.AUTO);
                     }
 
                     if (options.scale) {

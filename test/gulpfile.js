@@ -14,7 +14,7 @@ gulp.task('default', function () {
             opacity: 0.5,
         },
         'logo-2.png': {
-            resize: { width: 100, height: 100 },
+            resize: { width: 100 },
             scale: 1.2,
             rotate: 90,
             brightness: 0.5,
