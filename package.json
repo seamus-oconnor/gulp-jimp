@@ -1,40 +1,38 @@
 {
-    "name": "gulp-jimp",
-    "version": "0.1.0",
-    "description": "A Gulp friendly version of Jimp",
-    "main": "index.js",
-    "scripts": {
-        "test": "./node_modules/mocha/bin/mocha",
-        "test-watch" : "./node_modules/mocha/bin/mocha -w"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/antoinejaussoin/gulp-jimp.git"
-    },
-    "keywords": [
-    "gulp",
+  "name": "gulp-jimp2",
+  "version": "1.0.0",
+  "description": "JIMP wrapper for Gulp",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haydenbleasel/gulp-jimp2.git"
+  },
+  "scripts": {
+    "test": "cd test && gulp"
+  },
+  "keywords": [
     "jimp",
     "image",
     "manipulation",
-    "crop",
-    "resize"
+    "gulp",
+    "gulpplugin"
   ],
-    "author": "Antoine Jaussoin",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/antoinejaussoin/gulp-jimp/issues"
-    },
-    "homepage": "https://github.com/antoinejaussoin/gulp-jimp",
-    "dependencies": {
-        "event-stream": "^3.3.2",
-        "jimp": "^0.2.9"
-    },
-    "devDependencies": {
-        "mocha": "^2.3.3",
-        "rewire": "^2.3.4",
-        "should": "^7.1.1",
-        "sinon": "^1.17.2",
-        "vinyl": "^1.1.0"
-    },
-    "engine": "node >= 0.10.0"
+  "author": "Hayden Bleasel <haydenbleasel@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haydenbleasel/gulp-jimp2/issues"
+  },
+  "homepage": "https://github.com/haydenbleasel/gulp-jimp2",
+  "dependencies": {
+    "async": "^1.5.0",
+    "event-stream": "^3.3.2",
+    "gulp-util": "^3.0.7",
+    "jimp": "^0.2.19",
+    "through2": "^2.0.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "eslint": "^1.9.0",
+    "gulp": "^3.9.0"
+  }
 }
