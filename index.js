@@ -153,14 +153,12 @@
                         image.opaque();
                     }
 
-                    if (options.quality) {
+                    if (options.quality !== undefined) {
                         print('Setting quality level to ' + options.quality, name);
                         image.quality(options.quality);
                     }
 
                     image.getBuffer(Jimp.MIME_PNG, function (error, buffer) {
-
-                        // TODO: this is only firing for 1
                         self.push(new gutil.File({ path: name, contents: buffer }));
                         return callback(error);
                     });
