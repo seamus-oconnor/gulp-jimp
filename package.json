@@ -1,11 +1,11 @@
 {
-  "name": "gulp-jimp2",
-  "version": "1.0.5",
+  "name": "gulp-jimp",
+  "version": "1.0.6",
   "description": "JIMP wrapper for Gulp",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/haydenbleasel/gulp-jimp2.git"
+    "url": "https://github.com/haydenbleasel/gulp-jimp.git"
   },
   "scripts": {
     "test": "cd test && gulp"
@@ -20,9 +20,9 @@
   "author": "Hayden Bleasel <haydenbleasel@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/haydenbleasel/gulp-jimp2/issues"
+    "url": "https://github.com/haydenbleasel/gulp-jimp/issues"
   },
-  "homepage": "https://github.com/haydenbleasel/gulp-jimp2",
+  "homepage": "https://github.com/haydenbleasel/gulp-jimp",
   "dependencies": {
     "async": "^1.5.0",
     "colors": "^1.1.2",

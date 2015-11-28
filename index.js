@@ -28,7 +28,7 @@
             }
 
             if (file.isStream()) {
-                return next(new gutil.PluginError('gulp-jimp2', 'Streaming not supported'));
+                return next(new gutil.PluginError('gulp-jimp', 'Streaming not supported'));
             }
 
             Jimp.read(file.contents).then(function (image) {

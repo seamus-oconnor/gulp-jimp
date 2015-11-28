@@ -1,21 +1,30 @@
-# gulp-jimp2 [![Build Status](https://travis-ci.org/haydenbleasel/gulp-jimp2.svg?branch=master)](https://travis-ci.org/haydenbleasel/gulp-jimp2)
+# gulp-jimp [![Build Status](https://travis-ci.org/haydenbleasel/gulp-jimp.svg?branch=master)](https://travis-ci.org/haydenbleasel/gulp-jimp)
 
-A JIMP wrapper for Gulp forked from [antoinejaussoin/gulp-jimp](https://github.com/antoinejaussoin/gulp-jimp). Forked to provide a configuration for the full set of JIMP features, handle multiple image outputs, work purely with image buffers and deal with the Gulp stream properly. Install with:
+A JIMP wrapper for Gulp. Provides a configuration for the full set of JIMP features, handles multiple image outputs, works purely with image buffers and deals with the Gulp stream properly. Install with:
 
 ```
-npm install gulp-jimp2
+npm install gulp-jimp
 ```
 
 ## Usage
 
-```js
+The configuration takes a set of objects with the configuration:
 
+```js
+suffix: {
+    modifiers
+},
+```
+
+For example:
+
+```js
 var gulp = require('gulp'),
-    jimp = require('gulp-jimp2');
+    jimp = require('gulp-jimp');
 
 gulp.task('default', function () {
     gulp.src('logo.png').pipe(jimp({
-        'logo-1.png': {
+        '-1': {
             crop: { x: 100, y: 100, width: 200, height: 200 },
             invert: true,
             flip: { horizontal: true, vertical: true },
@@ -25,18 +34,26 @@ gulp.task('default', function () {
             sepia: true,
             opacity: 0.5,
         },
-        'logo-2.png': {
+        '-2': {
             resize: { width: 100, height: 100 },
             scale: 1.2,
             rotate: 90,
             brightness: 0.5,
             contrast: 0.3
         },
-        'logo-3.png': {
+        '-3': {
             posterize: 2,
             dither565: true,
             background: '#ff0000'
         }
     })).pipe(gulp.dest('./images/'));
 });
+```
+
+This will output the following files:
+
+```
+logo-1.png
+logo-2.png
+logo-3.png
 ```
