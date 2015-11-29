@@ -1,6 +1,6 @@
 {
   "name": "gulp-jimp",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "JIMP wrapper for Gulp",
   "main": "index.js",
   "repository": {
@@ -33,6 +33,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.1.18",
     "eslint": "^1.9.0",
     "gulp": "^3.9.0"
   }

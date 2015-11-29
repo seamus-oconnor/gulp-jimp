@@ -57,3 +57,16 @@ logo-1.png
 logo-2.png
 logo-3.png
 ```
+
+If you need an ES5 build for legacy purposes, just require the ES5 file:
+
+```js
+var jimp = require('gulp-jimp/es5');
+```
+
+To build the ES5 version:
+
+```sh
+npm install -g babel-cli
+babel --presets es2015 index.js --out-file es5.js
+```
