@@ -1,6 +1,8 @@
+'use strict';
+
 /* eslint func-names: 0, no-invalid-this: 0 */
 
-const async = require('async'),
+var async = require('async'),
     through2 = require('through2'),
     gutil = require('gulp-util'),
     colors = require('colors'),
@@ -8,24 +10,23 @@ const async = require('async'),
     path = require('path'),
     Jimp = require('jimp');
 
-(() => {
-
+(function () {
     'use strict';
 
-    const MAX_HEX = 255;
+    var MAX_HEX = 255;
 
-    function jimp (outputs, logging) {
+    function jimp(outputs, logging) {
 
-        function print (message, context) {
-            const prefix = context ? `[${colors.green(context) }] ` : '';
+        function print(message, context) {
+            var prefix = context ? '[' + colors.green(context) + '] ' : '';
 
             if (logging) {
-                console.log(`${ prefix }${ message }...`);
+                console.log('' + prefix + message + '...');
             }
         }
 
         return through2.obj(function (file, encoding, next) {
-            const self = this;
+            var self = this;
 
             if (file.isNull()) {
                 return next(null, file);
@@ -35,11 +36,13 @@ const async = require('async'),
                 return next(new gutil.PluginError('gulp-jimp', 'Streaming not supported'));
             }
 
-            Jimp.read(file.contents).then((image) => {
-                const oldName = path.basename(file.path), extension = path.extname(oldName), filename = path.basename(oldName, extension);
+            Jimp.read(file.contents).then(function (image) {
+                var oldName = path.basename(file.path),
+                    extension = path.extname(oldName),
+                    filename = path.basename(oldName, extension);
 
-                async.forEachOf(outputs, (options, suffix, callback) => {
-                    const rgba = options.background ? color(options.background).toRgb() : { r: 0, g: 0, b: 0, a: 0 },
+                async.forEachOf(outputs, function (options, suffix, callback) {
+                    var rgba = options.background ? color(options.background).toRgb() : { r: 0, g: 0, b: 0, a: 0 },
                         background = Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * MAX_HEX),
                         newName = filename + suffix + extension;
 
@@ -53,15 +56,15 @@ const async = require('async'),
                         image.invert();
                     }
                     if (options.flip || options.mirror) {
-                        print(`Flipping (mirroring) image ${ options.flip.horizontal ? '' : 'not ' }horizontally and ${ options.flip.vertical ? '' : 'not ' }vertically`, newName);
+                        print('Flipping (mirroring) image ' + (options.flip.horizontal ? '' : 'not ') + 'horizontally and ' + (options.flip.vertical ? '' : 'not ') + 'vertically', newName);
                         image.flip(options.flip.horizontal, options.flip.vertical);
                     }
                     if (options.gaussian) {
-                        print(`Applying gaussian blur of ${ options.gaussian }`, newName);
+                        print('Applying gaussian blur of ' + options.gaussian, newName);
                         image.gaussian(options.gaussian);
                     }
                     if (options.blur) {
-                        print(`Applying fast blur of ${ options.blur }`, newName);
+                        print('Applying fast blur of ' + options.blur, newName);
                         image.blur(options.blur);
                     }
                     if (options.greyscale) {
@@ -73,43 +76,43 @@ const async = require('async'),
                         image.sepia();
                     }
                     if (Number.isInteger(options.opacity)) {
-                        print(`Changing opacity to ${ options.opacity }`, newName);
+                        print('Changing opacity to ' + options.opacity, newName);
                         image.opacity(options.opacity);
                     }
                     if (options.resize) {
-                        print(`Resizing image to ${ options.resize.width || 'AUTO' }x${ options.resize.height || 'AUTO' }`, newName);
+                        print('Resizing image to ' + (options.resize.width || 'AUTO') + 'x' + (options.resize.height || 'AUTO'), newName);
                         image.resize(options.resize.width || Jimp.AUTO, options.resize.height || Jimp.AUTO);
                     }
                     if (options.scale) {
-                        print(`Scaling image by ${ options.scale }`, newName);
+                        print('Scaling image by ' + options.scale, newName);
                         image.scale(options.scale);
                     }
                     if (options.rotate) {
-                        print(`Rotating image ${ options.rotate } degrees clockwise`, newName);
+                        print('Rotating image ' + options.rotate + ' degrees clockwise', newName);
                         image.rotate(options.rotate);
                     }
                     if (options.blit) {
-                        print(`Blitting ${ options.blit.src } at ${ options.blit.x },${ options.blit.y }`, newName);
+                        print('Blitting ' + options.blit.src + ' at ' + options.blit.x + ',' + options.blit.y, newName);
                         image.blit(options.blit.src, options.blit.x, options.blit.y);
                     }
                     if (options.composite) {
-                        print(`Compositing ${ options.composite.src } at ${ options.composite.x },${ options.composite.y }`, newName);
+                        print('Compositing ' + options.composite.src + ' at ' + options.composite.x + ',' + options.composite.y, newName);
                         image.composite(options.composite.src, options.composite.x, options.composite.y);
                     }
                     if (Number.isInteger(options.brightness)) {
-                        print(`Adjusting brightness by ${ options.brightness }`, newName);
+                        print('Adjusting brightness by ' + options.brightness, newName);
                         image.brightness(options.brightness);
                     }
                     if (Number.isInteger(options.contrast)) {
-                        print(`Adjusting contrast by ${ options.contrast }`, newName);
+                        print('Adjusting contrast by ' + options.contrast, newName);
                         image.contrast(options.contrast);
                     }
                     if (Number.isInteger(options.posterize)) {
-                        print(`Posterizing image with ${ options.posterize } level`, newName);
+                        print('Posterizing image with ' + options.posterize + ' level', newName);
                         image.posterize(options.posterize);
                     }
                     if (options.mask) {
-                        print(`Masking ${ options.mask.src } at ${ options.mask.x },${ options.mask.y }`, newName);
+                        print('Masking ' + options.mask.src + ' at ' + options.mask.x + ',' + options.mask.y, newName);
                         image.mask(options.mask.src, options.mask.x, options.mask.y);
                     }
                     if (options.dither565) {
@@ -117,19 +120,19 @@ const async = require('async'),
                         image.dither565();
                     }
                     if (options.cover) {
-                        print(`Covering image within ${ options.cover.width }x${ options.cover.height }`, newName);
+                        print('Covering image within ' + options.cover.width + 'x' + options.cover.height, newName);
                         image.cover(options.cover.width, options.cover.height);
                     }
                     if (options.contain) {
-                        print(`Containing image within ${ options.contain.width }x${ options.contain.height }`, newName);
+                        print('Containing image within ' + options.contain.width + 'x' + options.contain.height, newName);
                         image.contain(options.contain.width, options.contain.height);
                     }
                     if (options.background) {
-                        print(`Setting background colour to ${ options.background }`, newName);
+                        print('Setting background colour to ' + options.background, newName);
                         image.background(background);
                     }
                     if (Number.isInteger(options.fade)) {
-                        print(`Fading image by ${ options.fade }`, newName);
+                        print('Fading image by ' + options.fade, newName);
                         image.fade(options.fade);
                     }
                     if (options.opaque) {
@@ -137,23 +140,24 @@ const async = require('async'),
                         image.opaque();
                     }
                     if (Number.isInteger(options.quality)) {
-                        print(`Setting quality level to ${ options.quality }`, newName);
+                        print('Setting quality level to ' + options.quality, newName);
                         image.quality(options.quality);
                     }
-                    image.getBuffer(Jimp.MIME_PNG, (error, buffer) => {
+                    image.getBuffer(Jimp.MIME_PNG, function (error, buffer) {
                         self.push(new gutil.File({
                             path: newName,
                             contents: buffer
                         }));
                         return callback(error);
                     });
-                }, (error) =>
-                    next(error));
-            }).catch((error) =>
-                next(error));
+                }, function (error) {
+                    return next(error);
+                });
+            }).catch(function (error) {
+                return next(error);
+            });
         });
     }
 
     module.exports = jimp;
-
 })();
