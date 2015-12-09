@@ -43,6 +43,10 @@ const async = require('async'),
                         background = Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * MAX_HEX),
                         newName = filename + suffix + extension;
 
+                    let MIME = Jimp.MIME_PNG;
+                    if (options.jpg) {
+                        MIME = Jimp.MIME_JPEG;
+                    }
                     if (options.crop) {
                         // print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y);
                         // pxData.copy(rawData, rawPos, pxPos, pxPos + byteWidth);: RangeError: out of range index
@@ -140,7 +144,7 @@ const async = require('async'),
                         print(`Setting quality level to ${ options.quality }`, newName);
                         image.quality(options.quality);
                     }
-                    image.getBuffer(Jimp.MIME_PNG, (error, buffer) => {
+                    image.getBuffer(MIME, (error, buffer) => {
                         self.push(new gutil.File({
                             path: newName,
                             contents: buffer
