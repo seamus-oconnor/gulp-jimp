@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 gulp.task('default', function () {
     gulp.src('logo.png').pipe(jimp({
         '-1': {
-            crop: { x: 100, y: 100, width: 200, height: 200 },
+            crop: { x: 451, y: 402, width: 632, height: 702 },
             invert: true,
             flip: { horizontal: true, vertical: true },
             gaussian: 2,
