@@ -47,9 +47,8 @@ var async = require('async'),
                         newName = filename + suffix + extension;
 
                     if (options.crop) {
-                        // print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y);
-                        // pxData.copy(rawData, rawPos, pxPos, pxPos + byteWidth);: RangeError: out of range index
-                        // image.crop(options.crop.x, options.crop.y, options.crop.width, options.crop.height);
+                        print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y);
+                        image.crop(options.crop.x, options.crop.y, options.crop.width, options.crop.height);
                     }
                     if (options.invert) {
                         print('Inverting image', newName);
