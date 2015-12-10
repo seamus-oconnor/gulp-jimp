@@ -24,6 +24,17 @@ const async = require('async'),
             }
         }
 
+        function getMIME (extension, type) {
+            type = type || '';
+            if (extension === '.bmp' || type.toLowerCase() === 'bmp' || type.toLowerCase() === 'bitmap') {
+                return { mime: Jimp.MIME_BMP, extension: '.bmp' };
+            }
+            if (extension === '.jpg' || type.toLowerCase() === 'jpg' || type.toLowerCase() === 'jpeg') {
+                return { mime: Jimp.MIME_JPEG, extension: '.jpg' };
+            }
+            return { mime: Jimp.MIME_PNG, extension: '.png' };
+        }
+
         return through2.obj(function (file, encoding, next) {
             const self = this;
 
@@ -36,19 +47,18 @@ const async = require('async'),
             }
 
             Jimp.read(file.contents).then((image) => {
-                const oldName = path.basename(file.path), extension = path.extname(oldName), filename = path.basename(oldName, extension);
+                const oldName = path.basename(file.path),
+                    extension = path.extname(oldName),
+                    filename = path.basename(oldName, extension);
 
                 async.forEachOf(outputs, (options, suffix, callback) => {
                     const rgba = options.background ? color(options.background).toRgb() : { r: 0, g: 0, b: 0, a: 0 },
                         background = Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * MAX_HEX),
-                        newName = filename + suffix + extension;
+                        type = getMIME(extension, options.type),
+                        newName = filename + suffix + type.extension;
 
-                    let MIME = Jimp.MIME_PNG;
-                    if (options.jpg) {
-                        MIME = Jimp.MIME_JPEG;
-                    }
                     if (options.crop) {
-                        print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y);
+                        print(`Applying Crop of ${ options.crop.width }x${ options.crop.height } at ${ options.crop.x },${ options.crop.y }`, newName);
                         image.crop(options.crop.x, options.crop.y, options.crop.width, options.crop.height);
                     }
                     if (options.invert) {
@@ -143,7 +153,8 @@ const async = require('async'),
                         print(`Setting quality level to ${ options.quality }`, newName);
                         image.quality(options.quality);
                     }
-                    image.getBuffer(MIME, (error, buffer) => {
+
+                    image.getBuffer(type.mime, (error, buffer) => {
                         self.push(new gutil.File({
                             path: newName,
                             contents: buffer

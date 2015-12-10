@@ -11,19 +11,21 @@ gulp.task('default', function () {
             blur: 2,
             greyscale: true,
             sepia: true,
-            opacity: 0.5,
+            opacity: 0.5
         },
         '-2': {
             resize: { width: 100 },
             scale: 1.2,
             rotate: 90,
             brightness: 0.5,
-            contrast: 0.3
+            contrast: 0.3,
+            type: 'bitmap'
         },
         '-3': {
             posterize: 2,
             dither565: true,
-            background: '#ff0000'
+            background: '#ff0000',
+            type: 'jpg'
         }
     }, true)).pipe(gulp.dest('./images/'));
 });

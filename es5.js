@@ -25,6 +25,17 @@ var async = require('async'),
             }
         }
 
+        function getMIME(extension, type) {
+            type = type || '';
+            if (extension === '.bmp' || type.toLowerCase() === 'bmp' || type.toLowerCase() === 'bitmap') {
+                return { mime: Jimp.MIME_BMP, extension: '.bmp' };
+            }
+            if (extension === '.jpg' || type.toLowerCase() === 'jpg' || type.toLowerCase() === 'jpeg') {
+                return { mime: Jimp.MIME_JPEG, extension: '.jpg' };
+            }
+            return { mime: Jimp.MIME_PNG, extension: '.png' };
+        }
+
         return through2.obj(function (file, encoding, next) {
             var self = this;
 
@@ -44,14 +55,11 @@ var async = require('async'),
                 async.forEachOf(outputs, function (options, suffix, callback) {
                     var rgba = options.background ? color(options.background).toRgb() : { r: 0, g: 0, b: 0, a: 0 },
                         background = Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * MAX_HEX),
-                        newName = filename + suffix + extension;
+                        type = getMIME(extension, options.type),
+                        newName = filename + suffix + type.extension;
 
-                    var MIME = Jimp.MIME_PNG;
-                    if (options.jpg) {
-                        MIME = Jimp.MIME_JPEG;
-                    }
                     if (options.crop) {
-                        print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y);
+                        print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y, newName);
                         image.crop(options.crop.x, options.crop.y, options.crop.width, options.crop.height);
                     }
                     if (options.invert) {
@@ -146,7 +154,8 @@ var async = require('async'),
                         print('Setting quality level to ' + options.quality, newName);
                         image.quality(options.quality);
                     }
-                    image.getBuffer(MIME, function (error, buffer) {
+
+                    image.getBuffer(type.mime, function (error, buffer) {
                         self.push(new gutil.File({
                             path: newName,
                             contents: buffer

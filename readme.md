@@ -11,8 +11,9 @@ npm install gulp-jimp
 The configuration takes a set of objects with the configuration:
 
 ```js
-suffix: {
-    modifiers
+suffix: {           // If the suffix is '-1', then 'source.jpg' -> 'source-1.jpg'
+    modifiers,      // Crop, Invert, Flip, Gaussian, Blur, Greyscale, Sepia, etc.
+    type            // BMP, Bitmap, JPG or JPEG. Case unnecessary and anything else is PNG.
 },
 ```
 
@@ -39,12 +40,14 @@ gulp.task('default', function () {
             scale: 1.2,
             rotate: 90,
             brightness: 0.5,
-            contrast: 0.3
+            contrast: 0.3,
+            type: 'bitmap'
         },
         '-3': {
             posterize: 2,
             dither565: true,
-            background: '#ff0000'
+            background: '#ff0000',
+            type: 'jpg'
         }
     })).pipe(gulp.dest('./images/'));
 });
