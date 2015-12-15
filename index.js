@@ -85,7 +85,7 @@ const async = require('async'),
                         print('Applying sepia tone', newName);
                         image.sepia();
                     }
-                    if (Number.isInteger(options.opacity)) {
+                    if (Number.isFinite(options.opacity)) {
                         print(`Changing opacity to ${ options.opacity }`, newName);
                         image.opacity(options.opacity);
                     }
@@ -109,15 +109,15 @@ const async = require('async'),
                         print(`Compositing ${ options.composite.src } at ${ options.composite.x },${ options.composite.y }`, newName);
                         image.composite(options.composite.src, options.composite.x, options.composite.y);
                     }
-                    if (Number.isInteger(options.brightness)) {
+                    if (Number.isFinite(options.brightness)) {
                         print(`Adjusting brightness by ${ options.brightness }`, newName);
                         image.brightness(options.brightness);
                     }
-                    if (Number.isInteger(options.contrast)) {
+                    if (Number.isFinite(options.contrast)) {
                         print(`Adjusting contrast by ${ options.contrast }`, newName);
                         image.contrast(options.contrast);
                     }
-                    if (Number.isInteger(options.posterize)) {
+                    if (Number.isFinite(options.posterize)) {
                         print(`Posterizing image with ${ options.posterize } level`, newName);
                         image.posterize(options.posterize);
                     }
@@ -141,7 +141,7 @@ const async = require('async'),
                         print(`Setting background colour to ${ options.background }`, newName);
                         image.background(background);
                     }
-                    if (Number.isInteger(options.fade)) {
+                    if (Number.isFinite(options.fade)) {
                         print(`Fading image by ${ options.fade }`, newName);
                         image.fade(options.fade);
                     }
@@ -149,7 +149,7 @@ const async = require('async'),
                         print('Setting the alpha channel on every pixel to fully opaque', newName);
                         image.opaque();
                     }
-                    if (Number.isInteger(options.quality)) {
+                    if (Number.isFinite(options.quality)) {
                         print(`Setting quality level to ${ options.quality }`, newName);
                         image.quality(options.quality);
                     }
