@@ -48,6 +48,8 @@ const async = require('async'),
 
             Jimp.read(file.contents).then((image) => {
                 const oldName = path.basename(file.path),
+                    oldDirname = path.dirname(file.path),
+                    oldBase = file.base,
                     extension = path.extname(oldName),
                     filename = path.basename(oldName, extension);
 
@@ -156,7 +158,8 @@ const async = require('async'),
 
                     image.getBuffer(type.mime, (error, buffer) => {
                         self.push(new gutil.File({
-                            path: newName,
+                            base: oldBase,
+                            path: path.resolve(oldDirname, newName),
                             contents: buffer
                         }));
                         return callback(error);
