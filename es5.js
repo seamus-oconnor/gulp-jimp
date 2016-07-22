@@ -48,7 +48,7 @@ var async = require('async'),
                 return next(new gutil.PluginError('gulp-jimp', 'Streaming not supported'));
             }
 
-            Jimp.read(file.contents).then(function (image) {
+            Jimp.read(file.contents).then(function (origImage) {
                 var oldName = path.basename(file.path),
                     extension = path.extname(oldName),
                     filename = path.basename(oldName, extension);
@@ -58,6 +58,8 @@ var async = require('async'),
                         background = Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * MAX_HEX),
                         type = getMIME(extension, options.type),
                         newName = filename + suffix + type.extension;
+
+                    var image = origImage.clone();
 
                     if (options.crop) {
                         print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y, newName);
