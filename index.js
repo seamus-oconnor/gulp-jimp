@@ -58,7 +58,7 @@ const async = require('async'),
                         background = Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * MAX_HEX),
                         type = getMIME(extension, options.type),
                         newName = filename + suffix + type.extension;
-                    
+
                     const image = origImage.clone();
 
                     if (options.crop) {
@@ -96,6 +96,10 @@ const async = require('async'),
                     if (options.resize) {
                         print(`Resizing image to ${ options.resize.width || 'AUTO' }x${ options.resize.height || 'AUTO' }`, newName);
                         image.resize(options.resize.width || Jimp.AUTO, options.resize.height || Jimp.AUTO);
+                    }
+                    if (options.scaleToFit) {
+                        print(`Scaling image to fit within ${ options.scaleToFit.width }x${ options.scaleToFit.height }`, newName);
+                        image.scaleToFit(options.scaleToFit.width, options.scaleToFit.height);
                     }
                     if (options.scale) {
                         print(`Scaling image by ${ options.scale }`, newName);

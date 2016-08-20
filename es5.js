@@ -97,6 +97,10 @@ var async = require('async'),
                         print('Resizing image to ' + (options.resize.width || 'AUTO') + 'x' + (options.resize.height || 'AUTO'), newName);
                         image.resize(options.resize.width || Jimp.AUTO, options.resize.height || Jimp.AUTO);
                     }
+                    if (options.scaleToFit) {
+                        print('Scaling image to fit within ' + options.scaleToFit.width + 'x' + options.scaleToFit.height, newName);
+                        image.scaleToFit(options.scaleToFit.width, options.scaleToFit.height);
+                    }
                     if (options.scale) {
                         print('Scaling image by ' + options.scale, newName);
                         image.scale(options.scale);
