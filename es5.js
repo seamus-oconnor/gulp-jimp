@@ -27,14 +27,16 @@ var async = require('async'),
         }
 
         function getMIME(extension, type) {
-            type = type || '';
-            if (extension === '.bmp' || type.toLowerCase() === 'bmp' || type.toLowerCase() === 'bitmap') {
-                return { mime: Jimp.MIME_BMP, extension: '.bmp' };
+            type = type || extension.substr(1);
+
+            switch (type.toLowerCase()) {
+                case 'bmp':
+                    return { mime: Jimp.MIME_BMP, extension: '.bmp' };
+                case 'jpg':
+                    return { mime: Jimp.MIME_JPEG, extension: '.jpg' };
+                default:
+                    return { mime: Jimp.MIME_PNG, extension: '.png' };
             }
-            if (extension === '.jpg' || type.toLowerCase() === 'jpg' || type.toLowerCase() === 'jpeg') {
-                return { mime: Jimp.MIME_JPEG, extension: '.jpg' };
-            }
-            return { mime: Jimp.MIME_PNG, extension: '.png' };
         }
 
         return through2.obj(function (file, encoding, next) {
@@ -50,6 +52,8 @@ var async = require('async'),
 
             Jimp.read(file.contents).then(function (origImage) {
                 var oldName = path.basename(file.path),
+                    oldDirname = path.dirname(file.path),
+                    oldBase = file.base,
                     extension = path.extname(oldName),
                     filename = path.basename(oldName, extension);
 
@@ -164,7 +168,8 @@ var async = require('async'),
 
                     image.getBuffer(type.mime, function (error, buffer) {
                         self.push(new gutil.File({
-                            path: newName,
+                            base: oldBase,
+                            path: path.resolve(oldDirname, newName),
                             contents: buffer
                         }));
                         return callback(error);
