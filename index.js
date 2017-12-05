@@ -25,14 +25,16 @@ const async = require('async'),
         }
 
         function getMIME (extension, type) {
-            type = type || '';
-            if (extension === '.bmp' || type.toLowerCase() === 'bmp' || type.toLowerCase() === 'bitmap') {
-                return { mime: Jimp.MIME_BMP, extension: '.bmp' };
+            type = type || extension.substr(1);
+
+            switch (type.toLowerCase()) {
+                case 'bmp':
+                    return { mime: Jimp.MIME_BMP, extension: '.bmp' };
+                case 'jpg':
+                    return { mime: Jimp.MIME_JPEG, extension: '.jpg' };
+                default:
+                    return { mime: Jimp.MIME_PNG, extension: '.png' };
             }
-            if (extension === '.jpg' || type.toLowerCase() === 'jpg' || type.toLowerCase() === 'jpeg') {
-                return { mime: Jimp.MIME_JPEG, extension: '.jpg' };
-            }
-            return { mime: Jimp.MIME_PNG, extension: '.png' };
         }
 
         return through2.obj(function (file, encoding, next) {
