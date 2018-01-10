@@ -65,10 +65,15 @@ var async = require('async'),
 
                     var image = origImage.clone();
 
+                    // Crop or autocrop not both
                     if (options.crop) {
                         print('Applying Crop of ' + options.crop.width + 'x' + options.crop.height + ' at ' + options.crop.x + ',' + options.crop.y, newName);
                         image.crop(options.crop.x, options.crop.y, options.crop.width, options.crop.height);
+                    } else if (options.autocrop) {
+                        print('Autoroping image with tolerance of ' + options.autocrop.tolerance + ' and only frames: ' + options.autocrop.cropOnlyFrames, newName);
+                        image.autocrop(options.autocrop.tolerance, options.autocrop.cropOnlyFrames);
                     }
+
                     if (options.invert) {
                         print('Inverting image', newName);
                         image.invert();

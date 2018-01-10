@@ -36,6 +36,7 @@ gulp.task('default', function () {
             opacity: 0.5,
         },
         '-2': {
+            autocrop: { tolerance: 0.0002, cropOnlyFrames: false },
             resize: { width: 100, height: 100 },
             scale: 1.2,
             rotate: 90,
@@ -69,7 +70,4 @@ var jimp = require('gulp-jimp/es5');
 
 To build the ES5 version:
 
-```sh
-npm install -g babel-cli
-babel --presets es2015 index.js --out-file es5.js
-```
+```npm run es5```

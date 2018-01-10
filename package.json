@@ -8,7 +8,8 @@
     "url": "https://github.com/haydenbleasel/gulp-jimp.git"
   },
   "scripts": {
-    "test": "cd test && gulp"
+    "test": "cd test && gulp",
+    "es5": "babel --presets es2015 index.js --out-file es5.js"
   },
   "keywords": [
     "jimp",
@@ -18,6 +19,9 @@
     "gulpplugin"
   ],
   "author": "Hayden Bleasel <haydenbleasel@gmail.com>",
+  "contributors": [
+    "Séamus O'Connor <seamus.oconnor@pneumaticweb.com>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/haydenbleasel/gulp-jimp/issues"
@@ -33,6 +37,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.1.18",
     "eslint": "^1.9.0",
     "gulp": "^3.9.0"
