@@ -1,6 +1,6 @@
 {
   "name": "gulp-jimp",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "JIMP wrapper for Gulp",
   "main": "index.js",
   "repository": {
