@@ -13,7 +13,7 @@ The configuration takes a set of objects with the configuration:
 ```js
 suffix: {           // If the suffix is '-1', then 'source.jpg' -> 'source-1.jpg'
     modifiers,      // Crop, Invert, Flip, Gaussian, Blur, Greyscale, Sepia, etc.
-    type            // BMP, Bitmap, JPG or JPEG. Case unnecessary and anything else is PNG.
+    type            // One of 'bmp', 'jpg', or 'png' (case insensitive)
 },
 ```
 
@@ -42,7 +42,7 @@ gulp.task('default', function () {
             rotate: 90,
             brightness: 0.5,
             contrast: 0.3,
-            type: 'bitmap'
+            type: 'bmp'
         },
         '-3': {
             posterize: 2,

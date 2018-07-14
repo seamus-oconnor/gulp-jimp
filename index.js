@@ -32,8 +32,10 @@ const async = require('async'),
                     return { mime: Jimp.MIME_BMP, extension: '.bmp' };
                 case 'jpg':
                     return { mime: Jimp.MIME_JPEG, extension: '.jpg' };
-                default:
+                case 'png':
                     return { mime: Jimp.MIME_PNG, extension: '.png' };
+                default:
+                    throw new Error(`Unrecognized extension: ${type}`);
             }
         }
 
